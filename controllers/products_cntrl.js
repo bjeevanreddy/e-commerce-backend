@@ -85,6 +85,42 @@ const productsControl = {
         } catch (error) {
             res.send("Internal Server Error").status(500);
         }
+    },
+    getproducts: async function(req,res)
+    {
+        try{
+            let prod=await products_service.getProducts();
+            for (let i in prod) {
+                prod[i].productImage = `${req.protocol}://${req.get('host')}/${prod[i].productImage}`;
+            }
+        if(prod.length>0)
+        {
+            res.json(prod).status(200);
+        }else{
+            res.send("No products").status(200);
+        }
+
+        }catch(err)
+        {
+            res.send("internal Server Error").status(500);
+        }
+    },
+    getproductbyID: async function(req,res)
+    {
+        try{
+            let id=req.params.id;
+            let prod=await products_service.getProductByID(id);
+            if(prod)
+            {
+                res.send(prod).status(200);
+            }else{
+                res.send("product not found").status(200);
+            }
+
+        }catch(err)
+        {
+            res.send("Internal Serrver Error").status(500);
+        }
     }
 }
 

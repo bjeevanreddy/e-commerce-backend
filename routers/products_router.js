@@ -20,5 +20,7 @@ router.put('/updateproduct', productscntrl.updateProduct);
 router.delete('/deleteproduct/:id', productscntrl.deleteProduct);
 router.get('/totalproducts', productscntrl.productCount);
 router.get('/featured', productscntrl.getfeaturedProducts);
+router.get('/products',productscntrl.getproducts);
+router.get('/product/:id',productscntrl.getproductbyID);
 
 module.exports = router;
