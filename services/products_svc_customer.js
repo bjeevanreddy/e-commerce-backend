@@ -22,7 +22,7 @@ class customersvc {
     }
     getProductById(id)
     {
-        return productModel.findOne({_id:id},{productName:1,productPrice:1}).exec();
+        return productModel.findOne({_id:id}).exec();
     }
 
 

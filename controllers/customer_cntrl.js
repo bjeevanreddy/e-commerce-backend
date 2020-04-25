@@ -90,14 +90,16 @@ const customercntrl = {
 
                     let quantity = user.cartitems[i].quantity;
                     // console.log(parseInt(quantity) * 5);
-                    let pname = productdetails.productName;
+                   // let pname = productdetails.productName;
+                   // let pid=productdetails._id;
                     let pprice = productdetails.productPrice;
-                    let amount = pprice * parseInt(quantity);
+                   // let amount = pprice * parseInt(quantity);
                     //console.log(typeOf(pprice));
-                    temparray.push({ ProductName: pname, ProductPrice: pprice, amount: amount });
+                    temparray.push({product:productdetails,quantity:parseInt(quantity)});
                 }
                 //console.log(temparray);
                 res.send(temparray).status(200);
+            
             } else {
                 res.send({status:1,message:"Cart Is Empty"}).status(200);
             }
