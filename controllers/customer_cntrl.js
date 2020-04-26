@@ -67,9 +67,10 @@ const customercntrl = {
                 user.cartitems.push({ productid: productid, quantity: quantity });
                 user.save();
                 res.send({status:1,message:"Added Successfully"}).status(200);
-            } else {
-                res.send({status:0,message:"Already in Cart"}).status(200);
-            }
+            } 
+            // else {
+            //      res.send({status:0,message:"Already in Cart"}).status(200);
+            //  }
 
         } catch (error) {
             res.send("Internal Server Error").status(500);
@@ -100,9 +101,10 @@ const customercntrl = {
                 //console.log(temparray);
                 res.send(temparray).status(200);
             
-            } else {
-                res.send({status:1,message:"Cart Is Empty"}).status(200);
-            }
+            } 
+            //else {
+            //     res.send({status:1,message:"Cart Is Empty"}).status(200);
+            // }
         } catch (error) {
             res.send("Internal Error").status(500);
         }
@@ -115,6 +117,44 @@ const customercntrl = {
         }catch(error)
         {
             res.send("Internl Server Error").status(500);
+        }
+    },
+    removecartItem: async function(req,res){
+        try{
+            let userid = req.params.userid;
+            let productid=req.params.productid;
+            let user = await customersvc.getuser(userid);
+            let temparray = [];
+            let cartlength = user.cartitems.length;
+            for(let i=0;i<cartlength;i++)
+            {
+                
+                if(user.cartitems[i].productid===productid){
+                    //console.log('hello');
+                    user.cartitems.splice(i,1);
+                    //console.log(user.cartitems)
+                    user.save();
+                    break;
+                }
+            }
+            res.send(user.cartitems).status(200);
+
+
+        }catch(err)
+        {
+            res.send("Internal Server Erro").status(500);
+        }
+    },
+    clearCart: async function(req,res){
+        try{
+        let userid=req.params.userid;
+        let user = await customersvc.getuser(userid);
+        user.cartitems=[];
+        user.save();
+        res.send(user.cartitems).status(200);
+
+        }catch(err){
+            res.send("internal Server Error").status(500);
         }
     }
 }
